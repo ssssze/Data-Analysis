@@ -1,292 +1,82 @@
 
-# =====================================================
-# LESSON 1: UNDERSTANDING AND ANALYSING DATA
-# =====================================================
+# Lesson 1: Understanding and Analysing Data
 
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+## 1. Understand the Data First (Exploratory Phase)
 
+This stage focuses on exploring and understanding a dataset before performing detailed analysis.
 
-# =====================================================
-# 1. UNDERSTAND THE DATA FIRST
-# EXPLORATORY PHASE
-# =====================================================
+### 1.1 Check Structure and Size
+- Understanding dataset structure and dimensions.
+- Identifying column names and rows.
+- Understanding different data types, including numerical, dates, categories and text.
 
-# Sample dataset for analysis
+### 1.2 Spot Data Quality Issues
+- Identifying missing values.
+- Detecting duplicate entries.
+- Finding spelling mistakes and inconsistent information.
+- Identifying unrealistic values and outliers.
 
-data = {
-    "Month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    "Region": ["North", "South", "North", "East", "South", "East"],
-    "Sales": [1200, 1500, 1800, 1600, 2000, 2200],
-    "Expenses": [500, 600, 700, 650, 800, 850],
-    "Customers": [100, 130, 150, 140, 170, 190]
-}
+### 1.3 Summarize Distributions
+- Understanding how data is distributed.
+- Calculating mean and median.
+- Identifying minimum and maximum values.
+- Understanding ranges and frequency counts.
 
-df = pd.DataFrame(data)
+---
 
+## 2. Core Analysis Techniques
 
-# A. Check structure and size
+This stage focuses on identifying patterns, comparing information and discovering relationships within data.
 
-print("\n--- DATA STRUCTURE AND SIZE ---")
+### 2.1 Trends Over Time
+- Tracking changes over days, months and years.
+- Identifying increasing and decreasing trends.
+- Understanding seasonal patterns.
 
-print("Dataset:")
-print(df)
+### 2.2 Comparisons and Segmentation
+- Grouping data by categories and regions.
+- Comparing different groups.
+- Identifying differences and similarities between segments.
 
-print("\nNumber of rows and columns:")
-print(df.shape)
+### 2.3 Relationships and Correlation
+- Understanding relationships between variables.
+- Measuring correlation between numerical data.
+- Identifying positive and negative relationships.
+- Understanding that correlation does not prove causation.
 
-print("\nColumn names:")
-print(df.columns.tolist())
+### 2.4 Anomaly Detection
+- Identifying unusual values.
+- Detecting sudden increases and decreases.
+- Finding unusual patterns that require further investigation.
 
-print("\nData types:")
-print(df.dtypes)
+---
 
-print("\nDataset information:")
-df.info()
+## 3. Practical Habits for Accurate Results
 
+This stage focuses on developing good practices to make data analysis more reliable and meaningful.
 
-# B. Spot quality issues
+### 3.1 Start with a Clear Question
+- Defining the purpose of the analysis.
+- Identifying what questions need answers.
+- Understanding what decisions the analysis will support.
 
-print("\n--- DATA QUALITY CHECK ---")
+### 3.2 Visualize Early
+- Understanding data visualization.
+- Using bar charts to compare categories.
+- Using line graphs to identify trends.
+- Using scatter plots to explore relationships.
 
-print("Missing values:")
-print(df.isnull().sum())
+### 3.3 Question Assumptions
+- Avoiding conclusions based on assumptions.
+- Understanding the difference between correlation and causation.
+- Considering external factors that may influence results.
+- Checking findings before making conclusions.
 
-print("\nDuplicate entries:")
-print(df.duplicated().sum())
+---
 
-print("\nUnique values:")
-print(df.nunique())
+## Learning Goal
 
-print("\nCheck numerical outliers:")
-print(df[["Sales", "Expenses", "Customers"]].describe())
+Develop the ability to explore datasets, identify patterns, analyse relationships, detect unusual information and turn raw data into meaningful insights.
 
-
-# C. Summarize distributions
-
-print("\n--- DATA DISTRIBUTION ---")
-
-print("Mean:")
-print(df[["Sales", "Expenses", "Customers"]].mean())
-
-print("\nMedian:")
-print(df[["Sales", "Expenses", "Customers"]].median())
-
-print("\nMinimum:")
-print(df[["Sales", "Expenses", "Customers"]].min())
-
-print("\nMaximum:")
-print(df[["Sales", "Expenses", "Customers"]].max())
-
-print("\nValue counts:")
-print(df["Region"].value_counts())
-
-
-# =====================================================
-# 2. CORE ANALYSIS TECHNIQUES
-# =====================================================
-
-
-# A. Trends over time
-
-print("\n--- TRENDS OVER TIME ---")
-
-print(df[["Month", "Sales"]])
-
-plt.figure(figsize=(8, 5))
-
-plt.plot(df["Month"], df["Sales"], marker="o")
-
-plt.title("Sales Trends Over Time")
-plt.xlabel("Month")
-plt.ylabel("Sales")
-plt.grid(True)
-
-plt.tight_layout()
-plt.show()
-
-
-# B. Comparisons and segmentation
-
-print("\n--- COMPARISONS AND SEGMENTATION ---")
-
-region_analysis = df.groupby("Region").agg({
-    "Sales": "sum",
-    "Expenses": "sum",
-    "Customers": "sum"
-})
-
-print(region_analysis)
-
-plt.figure(figsize=(8, 5))
-
-sns.barplot(
-    data=df,
-    x="Region",
-    y="Sales",
-    errorbar=None
-)
-
-plt.title("Sales Comparison by Region")
-plt.xlabel("Region")
-plt.ylabel("Sales")
-
-plt.tight_layout()
-plt.show()
-
-
-# C. Relationships and correlation
-
-print("\n--- RELATIONSHIPS AND CORRELATION ---")
-
-correlation = df[["Sales", "Expenses", "Customers"]].corr()
-
-print(correlation)
-
-# Scatter plot
-
-plt.figure(figsize=(8, 5))
-
-sns.scatterplot(
-    data=df,
-    x="Expenses",
-    y="Sales"
-)
-
-plt.title("Expenses vs Sales")
-plt.xlabel("Expenses")
-plt.ylabel("Sales")
-
-plt.tight_layout()
-plt.show()
-
-# Correlation heatmap
-
-plt.figure(figsize=(7, 5))
-
-sns.heatmap(
-    correlation,
-    annot=True,
-    cmap="coolwarm"
-)
-
-plt.title("Correlation Heatmap")
-
-plt.tight_layout()
-plt.show()
-
-
-# D. Anomaly detection
-
-print("\n--- ANOMALY DETECTION ---")
-
-Q1 = df["Sales"].quantile(0.25)
-Q3 = df["Sales"].quantile(0.75)
-
-IQR = Q3 - Q1
-
-lower_limit = Q1 - 1.5 * IQR
-upper_limit = Q3 + 1.5 * IQR
-
-anomalies = df[
-    (df["Sales"] < lower_limit) |
-    (df["Sales"] > upper_limit)
-]
-
-print("Unusual records:")
-print(anomalies)
-
-print("Number of unusual records:", len(anomalies))
-
-
-# =====================================================
-# 3. PRACTICAL HABITS FOR ACCURATE RESULTS
-# =====================================================
-
-
-# A. Start with a clear question
-
-print("\n--- ANALYSIS QUESTIONS ---")
-
-questions = [
-    "Which month has the highest sales?",
-    "Which region generates the most sales?",
-    "Is there a relationship between expenses and sales?",
-    "Are there any unusual sales values?"
-]
-
-for question in questions:
-    print("-", question)
-
-
-# B. Visualize early
-
-print("\n--- DATA VISUALIZATION ---")
-
-# Bar chart
-
-df.groupby("Region")["Sales"].sum().plot(
-    kind="bar",
-    figsize=(8, 5),
-    title="Total Sales by Region"
-)
-
-plt.xlabel("Region")
-plt.ylabel("Sales")
-plt.tight_layout()
-plt.show()
-
-
-# Line graph
-
-plt.figure(figsize=(8, 5))
-
-plt.plot(df["Month"], df["Sales"], marker="o")
-
-plt.title("Monthly Sales")
-plt.xlabel("Month")
-plt.ylabel("Sales")
-
-plt.tight_layout()
-plt.show()
-
-
-# Scatter plot
-
-plt.figure(figsize=(8, 5))
-
-plt.scatter(df["Expenses"], df["Sales"])
-
-plt.title("Expenses and Sales Relationship")
-plt.xlabel("Expenses")
-plt.ylabel("Sales")
-
-plt.tight_layout()
-plt.show()
-
-
-# C. Question assumptions
-
-print("\n--- QUESTIONING ASSUMPTIONS ---")
-
-print("Correlation:", correlation.loc["Expenses", "Sales"])
-
-print(
-    "Remember: Correlation does not prove causation."
-)
-
-print(
-    "Other factors may influence the relationship "
-    "between expenses and sales."
-)
-
-
-# =====================================================
-# END OF LESSON 1
-# =====================================================
-
-print("\nLesson 1 completed successfully!")
 
 
