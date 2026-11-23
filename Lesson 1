@@ -5,30 +5,37 @@
 # ==========================================
 
 
-# 1. VARIABLES AND DATA TYPES
+# 1. VARIABLES
 
-print("1. VARIABLES AND DATA TYPES")
+print("----- VARIABLES -----")
 
 name = "Sonam"
 age = 17
-height = 1.65
-is_learning = True
+subject = "Data Analysis"
 
 print("Name:", name)
 print("Age:", age)
-print("Height:", height)
-print("Learning Data Analysis:", is_learning)
+print("Subject:", subject)
 
-# Check data types
+
+# 2. DATA TYPES
+
+print("\n----- DATA TYPES -----")
+
+name = "Python"       # String
+number = 25           # Integer
+price = 15.5          # Float
+is_learning = True    # Boolean
+
 print(type(name))
-print(type(age))
-print(type(height))
+print(type(number))
+print(type(price))
 print(type(is_learning))
 
 
-# 2. BASIC MATHEMATICAL OPERATIONS
+# 3. MATHEMATICAL OPERATORS
 
-print("\n2. MATHEMATICAL OPERATIONS")
+print("\n----- MATHEMATICAL OPERATORS -----")
 
 a = 20
 b = 10
@@ -37,143 +44,153 @@ print("Addition:", a + b)
 print("Subtraction:", a - b)
 print("Multiplication:", a * b)
 print("Division:", a / b)
+print("Floor Division:", a // b)
 print("Power:", a ** b)
 print("Remainder:", a % b)
 
 
-# 3. LISTS
+# 4. LISTS
 
-print("\n3. LISTS")
+print("\n----- LISTS -----")
 
-movies = ["Avatar", "Titanic", "Inception", "Interstellar"]
+numbers = [10, 20, 30, 40, 50]
 
-print("All movies:", movies)
-print("First movie:", movies[0])
-print("Last movie:", movies[-1])
+print("List:", numbers)
+print("First element:", numbers[0])
+print("Last element:", numbers[-1])
 
-# Add a movie
-movies.append("The Batman")
+# Adding an element
+numbers.append(60)
 
-# Remove a movie
-movies.remove("Titanic")
+# Removing an element
+numbers.remove(20)
 
-print("Updated movie list:", movies)
-print("Number of movies:", len(movies))
-
-
-# 4. TUPLES
-
-print("\n4. TUPLES")
-
-release_years = (2009, 1997, 2010, 2014)
-
-print("Release years:", release_years)
-print("First year:", release_years[0])
-print("Total years:", len(release_years))
+print("Updated list:", numbers)
+print("Number of elements:", len(numbers))
 
 
-# 5. DICTIONARIES
+# 5. TUPLES
 
-print("\n5. DICTIONARIES")
+print("\n----- TUPLES -----")
 
-movie = {
-    "title": "Inception",
-    "year": 2010,
-    "rating": 8.8,
-    "genre": "Science Fiction"
+years = (2020, 2021, 2022, 2023, 2024)
+
+print("Years:", years)
+print("First year:", years[0])
+print("Total years:", len(years))
+
+
+# 6. DICTIONARIES
+
+print("\n----- DICTIONARIES -----")
+
+student = {
+    "name": "Alex",
+    "age": 17,
+    "grade": 11,
+    "subject": "Mathematics"
 }
 
-print("Movie information:", movie)
+print("Student information:", student)
 
-print("Title:", movie["title"])
-print("Year:", movie["year"])
-print("Rating:", movie["rating"])
+# Accessing values
+print("Name:", student["name"])
+print("Grade:", student["grade"])
 
-# Add a new value
-movie["director"] = "Christopher Nolan"
+# Adding a new item
+student["school"] = "Royal Academy"
 
-print("Updated dictionary:", movie)
+print("Updated dictionary:", student)
 
 
-# 6. CONDITIONAL STATEMENTS
+# 7. CONDITIONAL STATEMENTS
 
-print("\n6. CONDITIONAL STATEMENTS")
+print("\n----- CONDITIONAL STATEMENTS -----")
 
-rating = 8.5
+marks = 75
 
-if rating >= 8:
-    print("Highly rated")
+if marks >= 80:
+    print("Grade: A")
 
-elif rating >= 5:
-    print("Average rated")
+elif marks >= 60:
+    print("Grade: B")
+
+elif marks >= 40:
+    print("Grade: C")
 
 else:
-    print("Low rated")
+    print("Grade: Fail")
 
 
-# 7. FOR LOOPS
+# 8. FOR LOOPS
 
-print("\n7. FOR LOOPS")
+print("\n----- FOR LOOPS -----")
 
-movies = ["Avatar", "Titanic", "Inception"]
+numbers = [1, 2, 3, 4, 5]
 
-for movie in movies:
-    print(movie)
-
-
-# 8. WHILE LOOPS
-
-print("\n8. WHILE LOOPS")
-
-number = 1
-
-while number <= 5:
+for number in numbers:
     print(number)
-    number += 1
 
 
-# 9. FUNCTIONS
+# 9. WHILE LOOPS
 
-print("\n9. FUNCTIONS")
+print("\n----- WHILE LOOPS -----")
+
+count = 1
+
+while count <= 5:
+    print(count)
+    count += 1
+
+
+# 10. FUNCTIONS
+
+print("\n----- FUNCTIONS -----")
 
 def calculate_average(numbers):
-    average = sum(numbers) / len(numbers)
+
+    total = sum(numbers)
+    average = total / len(numbers)
+
     return average
 
-ratings = [8, 9, 7, 10, 6]
 
-result = calculate_average(ratings)
+marks = [70, 85, 90, 65, 80]
 
-print("Average rating:", result)
+result = calculate_average(marks)
+
+print("Average marks:", result)
 
 
-# 10. BASIC DATA ANALYSIS PRACTICE
+# 11. BUILT-IN FUNCTIONS
 
-print("\n10. BASIC DATA ANALYSIS")
+print("\n----- BUILT-IN FUNCTIONS -----")
 
-# Sample movie data
-movie_names = ["Avatar", "Titanic", "Inception", "Interstellar"]
-movie_ratings = [7.9, 7.9, 8.8, 8.6]
+numbers = [15, 30, 45, 60, 75]
 
-# Calculate average rating
-average_rating = sum(movie_ratings) / len(movie_ratings)
+print("Total:", sum(numbers))
+print("Maximum:", max(numbers))
+print("Minimum:", min(numbers))
+print("Length:", len(numbers))
+print("Sorted:", sorted(numbers))
 
-# Find highest and lowest ratings
-highest_rating = max(movie_ratings)
-lowest_rating = min(movie_ratings)
 
-print("Total movies:", len(movie_names))
-print("Average rating:", average_rating)
-print("Highest rating:", highest_rating)
-print("Lowest rating:", lowest_rating)
+# 12. STRING OPERATIONS
 
-# Display movies and their ratings
-for i in range(len(movie_names)):
-    print(movie_names[i], ":", movie_ratings[i])
+print("\n----- STRING OPERATIONS -----")
+
+text = "learning python"
+
+print("Original:", text)
+print("Uppercase:", text.upper())
+print("Lowercase:", text.lower())
+print("Capitalized:", text.capitalize())
+print("Length:", len(text))
 
 
 # ==========================================
 # END OF LESSON 1
 # ==========================================
 
-print("\nLesson 1 completed!")
+print("\nLesson 1 completed successfully!")
+
