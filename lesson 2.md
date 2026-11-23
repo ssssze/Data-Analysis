@@ -1,32 +1,37 @@
-# Lesson 2: NumPy – Numerical Analysis
+
+# Lesson 2: NumPy and Pandas – Working with Data
+
+## What is NumPy?
+NumPy (Numerical Python) is a Python library used for numerical calculations and working with arrays. It makes mathematical operations faster and easier.
+
+## What is Pandas?
+Pandas is a Python library used to organise, manage and analyse structured data. It allows us to work with information in tables called DataFrames.
 
 ## 1. Introduction to NumPy
-- Understanding NumPy and its importance in data analysis.
-- Learning how NumPy arrays differ from Python lists.
+- Understanding NumPy and its importance.
+- Learning about arrays and their dimensions.
+- Understanding array data types.
 
-## 2. NumPy Arrays
-- Creating one-dimensional and two-dimensional arrays.
-- Understanding array shapes, dimensions and data types.
+## 2. NumPy Operations
+- Performing mathematical calculations.
+- Using indexing and slicing.
+- Reshaping and manipulating arrays.
 
-## 3. Array Operations
-- Performing addition, subtraction, multiplication and division.
-- Applying mathematical operations to arrays.
+## 3. Introduction to Pandas
+- Understanding Series and DataFrames.
+- Learning how Pandas is used in data analysis.
 
-## 4. Indexing and Slicing
-- Accessing specific elements in arrays.
-- Selecting and extracting parts of an array.
+## 4. Working with Pandas
+- Loading CSV and Excel files.
+- Viewing and exploring datasets.
+- Selecting rows and columns.
+- Sorting and filtering information.
 
-## 5. Mathematical and Statistical Functions
-- Calculating sums, averages, minimum and maximum values.
-- Understanding mean, median, variance and standard deviation.
-
-## 6. Array Manipulation
-- Reshaping, sorting, joining and splitting arrays.
-- Changing the structure of numerical data.
-
-## 7. Filtering Data
-- Selecting values based on specific conditions.
-- Using Boolean indexing to filter arrays.
+## 5. Basic Data Analysis
+- Calculating averages, sums and other statistics.
+- Grouping and summarising information.
+- Understanding basic data relationships.
 
 ## Learning Goal
-Understand how to use NumPy to organise, manipulate and analyse numerical data efficiently.
+Learn how to use NumPy and Pandas to store, organise, manipulate and analyse numerical and structured data.
+
