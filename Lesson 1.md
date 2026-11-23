@@ -1,204 +1,163 @@
 
+# =====================================================
 # LESSON 1: UNDERSTANDING AND ANALYSING DATA
+# =====================================================
 
-## Objective
-Learn how to explore datasets, identify data quality issues, analyse trends, compare categories, find relationships, detect anomalies and draw meaningful insights.
-
-## Libraries
-```bash
-pip install pandas numpy matplotlib seaborn
-```
-
-## 1. Import Libraries and Create a Dataset
-
-```python
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Create a sample tourism dataset
+
+# =====================================================
+# 1. UNDERSTAND THE DATA FIRST
+# EXPLORATORY PHASE
+# =====================================================
+
+# Sample dataset for analysis
 
 data = {
-    "Month": [
-        "January", "February", "March", "April",
-        "May", "June", "July", "August",
-        "September", "October", "November", "December"
-    ],
-
-    "Region": [
-        "Paro", "Thimphu", "Punakha", "Paro",
-        "Thimphu", "Punakha", "Paro", "Thimphu",
-        "Punakha", "Paro", "Thimphu", "Punakha"
-    ],
-
-    "Tourists": [
-        1200, 1500, 1800, 1600, 2000, 2200,
-        2500, 2800, 2100, 1900, 1700, 3000
-    ],
-
-    "Advertising": [
-        500, 600, 700, 650, 800, 850,
-        900, 1000, 750, 700, 650, 1100
-    ],
-
-    "Bookings": [
-        100, 130, 150, 140, 170, 190,
-        210, 240, 180, 160, 150, 260
-    ]
+    "Month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    "Region": ["North", "South", "North", "East", "South", "East"],
+    "Sales": [1200, 1500, 1800, 1600, 2000, 2200],
+    "Expenses": [500, 600, 700, 650, 800, 850],
+    "Customers": [100, 130, 150, 140, 170, 190]
 }
 
 df = pd.DataFrame(data)
 
 
-# 2. UNDERSTANDING THE DATA
+# A. Check structure and size
 
-print("\n--- DATASET ---")
+print("\n--- DATA STRUCTURE AND SIZE ---")
+
+print("Dataset:")
 print(df)
 
-# Check the first five rows
-print("\nFirst five rows:")
-print(df.head())
-
-# Check the last five rows
-print("\nLast five rows:")
-print(df.tail())
-
-# Check dataset size
-print("\nDataset shape:")
+print("\nNumber of rows and columns:")
 print(df.shape)
 
-# Check column names
 print("\nColumn names:")
-print(df.columns)
+print(df.columns.tolist())
 
-# Check data types
 print("\nData types:")
 print(df.dtypes)
 
-# General information
 print("\nDataset information:")
 df.info()
 
 
-# 3. IDENTIFYING DATA QUALITY ISSUES
+# B. Spot quality issues
 
-# Check missing values
-print("\n--- MISSING VALUES ---")
+print("\n--- DATA QUALITY CHECK ---")
+
+print("Missing values:")
 print(df.isnull().sum())
 
-# Check duplicate records
-print("\n--- DUPLICATES ---")
+print("\nDuplicate entries:")
 print(df.duplicated().sum())
 
-# Check unique values
-print("\n--- UNIQUE VALUES ---")
+print("\nUnique values:")
 print(df.nunique())
 
-# Check for unrealistic values
-print("\n--- TOURIST ARRIVALS ---")
-print(df["Tourists"].describe())
+print("\nCheck numerical outliers:")
+print(df[["Sales", "Expenses", "Customers"]].describe())
 
 
-# 4. SUMMARIZING DATA DISTRIBUTIONS
+# C. Summarize distributions
 
-print("\n--- STATISTICAL ANALYSIS ---")
+print("\n--- DATA DISTRIBUTION ---")
 
-print("Mean:", df["Tourists"].mean())
+print("Mean:")
+print(df[["Sales", "Expenses", "Customers"]].mean())
 
-print("Median:", df["Tourists"].median())
+print("\nMedian:")
+print(df[["Sales", "Expenses", "Customers"]].median())
 
-print("Minimum:", df["Tourists"].min())
+print("\nMinimum:")
+print(df[["Sales", "Expenses", "Customers"]].min())
 
-print("Maximum:", df["Tourists"].max())
+print("\nMaximum:")
+print(df[["Sales", "Expenses", "Customers"]].max())
 
-print("Range:",
-      df["Tourists"].max() - df["Tourists"].min())
-
-print("Standard deviation:", df["Tourists"].std())
-
-print("\nComplete statistical summary:")
-print(df.describe())
+print("\nValue counts:")
+print(df["Region"].value_counts())
 
 
-# 5. TRENDS OVER TIME
+# =====================================================
+# 2. CORE ANALYSIS TECHNIQUES
+# =====================================================
 
-print("\n--- MONTHLY TOURISM TRENDS ---")
 
-print(df[["Month", "Tourists"]])
+# A. Trends over time
 
-# Create a line graph
-plt.figure(figsize=(10, 5))
+print("\n--- TRENDS OVER TIME ---")
 
-plt.plot(
-    df["Month"],
-    df["Tourists"],
-    marker="o"
-)
+print(df[["Month", "Sales"]])
 
-plt.title("Monthly Tourist Arrivals")
+plt.figure(figsize=(8, 5))
+
+plt.plot(df["Month"], df["Sales"], marker="o")
+
+plt.title("Sales Trends Over Time")
 plt.xlabel("Month")
-plt.ylabel("Number of Tourists")
-
-plt.xticks(rotation=45)
+plt.ylabel("Sales")
 plt.grid(True)
+
 plt.tight_layout()
 plt.show()
 
 
-# 6. COMPARISONS AND SEGMENTATION
+# B. Comparisons and segmentation
 
-# Group tourist arrivals by region
+print("\n--- COMPARISONS AND SEGMENTATION ---")
 
-region_analysis = df.groupby("Region")["Tourists"].agg(
-    ["sum", "mean", "max", "min"]
-)
+region_analysis = df.groupby("Region").agg({
+    "Sales": "sum",
+    "Expenses": "sum",
+    "Customers": "sum"
+})
 
-print("\n--- REGIONAL ANALYSIS ---")
 print(region_analysis)
-
-# Compare regions using a bar chart
 
 plt.figure(figsize=(8, 5))
 
 sns.barplot(
     data=df,
     x="Region",
-    y="Tourists",
-    estimator="sum",
+    y="Sales",
     errorbar=None
 )
 
-plt.title("Total Tourist Arrivals by Region")
+plt.title("Sales Comparison by Region")
 plt.xlabel("Region")
-plt.ylabel("Total Tourists")
+plt.ylabel("Sales")
 
 plt.tight_layout()
 plt.show()
 
 
-# 7. RELATIONSHIPS AND CORRELATION
+# C. Relationships and correlation
 
-# Calculate correlation between advertising and bookings
+print("\n--- RELATIONSHIPS AND CORRELATION ---")
 
-correlation = df["Advertising"].corr(df["Bookings"])
+correlation = df[["Sales", "Expenses", "Customers"]].corr()
 
-print("\n--- CORRELATION ANALYSIS ---")
-print("Correlation:", correlation)
+print(correlation)
 
-# Create a scatter plot
+# Scatter plot
 
 plt.figure(figsize=(8, 5))
 
 sns.scatterplot(
     data=df,
-    x="Advertising",
-    y="Bookings"
+    x="Expenses",
+    y="Sales"
 )
 
-plt.title("Advertising Expenses vs Bookings")
-plt.xlabel("Advertising Expenses")
-plt.ylabel("Bookings")
+plt.title("Expenses vs Sales")
+plt.xlabel("Expenses")
+plt.ylabel("Sales")
 
 plt.tight_layout()
 plt.show()
@@ -208,135 +167,126 @@ plt.show()
 plt.figure(figsize=(7, 5))
 
 sns.heatmap(
-    df[["Tourists", "Advertising", "Bookings"]].corr(),
+    correlation,
     annot=True,
-    cmap="coolwarm",
-    vmin=-1,
-    vmax=1
+    cmap="coolwarm"
 )
 
 plt.title("Correlation Heatmap")
+
 plt.tight_layout()
 plt.show()
 
 
-# 8. ANOMALY DETECTION
+# D. Anomaly detection
 
-# Use the IQR method to identify unusual values
+print("\n--- ANOMALY DETECTION ---")
 
-Q1 = df["Tourists"].quantile(0.25)
-Q3 = df["Tourists"].quantile(0.75)
+Q1 = df["Sales"].quantile(0.25)
+Q3 = df["Sales"].quantile(0.75)
 
 IQR = Q3 - Q1
 
 lower_limit = Q1 - 1.5 * IQR
 upper_limit = Q3 + 1.5 * IQR
 
-# Identify anomalies
-
 anomalies = df[
-    (df["Tourists"] < lower_limit) |
-    (df["Tourists"] > upper_limit)
+    (df["Sales"] < lower_limit) |
+    (df["Sales"] > upper_limit)
 ]
 
-print("\n--- ANOMALY DETECTION ---")
+print("Unusual records:")
 print(anomalies)
 
 print("Number of unusual records:", len(anomalies))
 
 
-# 9. DATA VISUALIZATION
+# =====================================================
+# 3. PRACTICAL HABITS FOR ACCURATE RESULTS
+# =====================================================
 
-# Histogram: Distribution of tourist arrivals
+
+# A. Start with a clear question
+
+print("\n--- ANALYSIS QUESTIONS ---")
+
+questions = [
+    "Which month has the highest sales?",
+    "Which region generates the most sales?",
+    "Is there a relationship between expenses and sales?",
+    "Are there any unusual sales values?"
+]
+
+for question in questions:
+    print("-", question)
+
+
+# B. Visualize early
+
+print("\n--- DATA VISUALIZATION ---")
+
+# Bar chart
+
+df.groupby("Region")["Sales"].sum().plot(
+    kind="bar",
+    figsize=(8, 5),
+    title="Total Sales by Region"
+)
+
+plt.xlabel("Region")
+plt.ylabel("Sales")
+plt.tight_layout()
+plt.show()
+
+
+# Line graph
 
 plt.figure(figsize=(8, 5))
 
-sns.histplot(
-    df["Tourists"],
-    bins=6,
-    kde=True
-)
+plt.plot(df["Month"], df["Sales"], marker="o")
 
-plt.title("Distribution of Tourist Arrivals")
-plt.xlabel("Number of Tourists")
-plt.ylabel("Frequency")
+plt.title("Monthly Sales")
+plt.xlabel("Month")
+plt.ylabel("Sales")
 
 plt.tight_layout()
 plt.show()
 
 
-# Boxplot: Identify unusual values visually
+# Scatter plot
 
 plt.figure(figsize=(8, 5))
 
-sns.boxplot(
-    x=df["Tourists"]
-)
+plt.scatter(df["Expenses"], df["Sales"])
 
-plt.title("Tourist Arrivals Boxplot")
-plt.xlabel("Number of Tourists")
+plt.title("Expenses and Sales Relationship")
+plt.xlabel("Expenses")
+plt.ylabel("Sales")
 
 plt.tight_layout()
 plt.show()
 
 
-# 10. FINAL ANALYSIS AND INSIGHTS
+# C. Question assumptions
 
-print("\n========== FINAL ANALYSIS ==========")
+print("\n--- QUESTIONING ASSUMPTIONS ---")
 
-print("Total tourist arrivals:",
-      df["Tourists"].sum())
+print("Correlation:", correlation.loc["Expenses", "Sales"])
 
-print("Average tourist arrivals:",
-      round(df["Tourists"].mean(), 2))
+print(
+    "Remember: Correlation does not prove causation."
+)
 
-print("Highest tourist arrivals:",
-      df["Tourists"].max())
+print(
+    "Other factors may influence the relationship "
+    "between expenses and sales."
+)
 
-print("Lowest tourist arrivals:",
-      df["Tourists"].min())
 
-print("Month with highest arrivals:",
-      df.loc[df["Tourists"].idxmax(), "Month"])
+# =====================================================
+# END OF LESSON 1
+# =====================================================
 
-print("Region with highest total arrivals:",
-      region_analysis["sum"].idxmax())
-
-print("Advertising and bookings correlation:",
-      round(correlation, 2))
-
-print("Number of unusual records:",
-      len(anomalies))
-
-print("\nData analysis completed successfully!")
-```
-
-## 11. Important Concepts Learned
-
-| Topic | Skills |
-|---|---|
-| Exploratory analysis | Dataset structure, size and data types |
-| Data quality | Missing values and duplicates |
-| Statistics | Mean, median, range and standard deviation |
-| Trends | Changes over time |
-| Comparisons | Grouping and segmentation |
-| Correlation | Relationships between variables |
-| Anomalies | Identifying unusual records |
-| Visualization | Line graphs, bar charts, histograms and scatter plots |
-| Interpretation | Drawing meaningful conclusions |
-
-## 12. Important Notes
-
-- Always understand your dataset before performing analysis.
-- Start with a clear question.
-- Visualize your data to identify patterns.
-- Check unusual values before making conclusions.
-- Correlation does not necessarily mean causation.
-- Do not assume that every unusual value is an error.
-
-## Learning Goal
-
-By completing this lesson, I aim to understand how to explore, analyse and interpret datasets and turn raw data into meaningful insights.
-
+print("\nLesson 1 completed successfully!")
 
 
