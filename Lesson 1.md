@@ -5,7 +5,7 @@
 
 # 1. VARIABLES AND DATA TYPES
 
-print("1. VARIABLES AND DATA TYPES")
+print("1. Variables are used to store information.")
 
 name = "Sonam"
 age = 17
@@ -23,25 +23,10 @@ print(type(age))
 print(type(height))
 print(type(is_learning))
 
-
-# 2. BASIC MATHEMATICAL OPERATIONS
-
-print("\n2. MATHEMATICAL OPERATIONS")
-
-a = 20
-b = 10
-
-print("Addition:", a + b)
-print("Subtraction:", a - b)
-print("Multiplication:", a * b)
-print("Division:", a / b)
-print("Power:", a ** b)
-print("Remainder:", a % b)
-
-
-# 3. LISTS
+# 2. LISTS
 
 print("\n3. LISTS")
+print("A list stores multiple values in one variable.")
 
 movies = ["Avatar", "Titanic", "Inception", "Interstellar"]
 
@@ -59,10 +44,10 @@ print("Updated movie list:", movies)
 print("Number of movies:", len(movies))
 
 
-# 4. TUPLES
+# 3. TUPLES
 
 print("\n4. TUPLES")
-
+print("Tuples are similar to lists, but their values cannot be changed after creation.")
 release_years = (2009, 1997, 2010, 2014)
 
 print("Release years:", release_years)
@@ -70,7 +55,7 @@ print("First year:", release_years[0])
 print("Total years:", len(release_years))
 
 
-# 5. DICTIONARIES
+# 4. DICTIONARIES
 
 print("\n5. DICTIONARIES")
 
@@ -93,7 +78,7 @@ movie["director"] = "Christopher Nolan"
 print("Updated dictionary:", movie)
 
 
-# 6. CONDITIONAL STATEMENTS
+# 5. CONDITIONAL STATEMENTS
 
 print("\n6. CONDITIONAL STATEMENTS")
 
@@ -109,7 +94,7 @@ else:
     print("Low rated")
 
 
-# 7. FOR LOOPS
+# 6. FOR LOOPS
 
 print("\n7. FOR LOOPS")
 
@@ -119,7 +104,7 @@ for movie in movies:
     print(movie)
 
 
-# 8. WHILE LOOPS
+# 7. WHILE LOOPS
 
 print("\n8. WHILE LOOPS")
 
@@ -130,7 +115,7 @@ while number <= 5:
     number += 1
 
 
-# 9. FUNCTIONS
+# 8. FUNCTIONS
 
 print("\n9. FUNCTIONS")
 
@@ -145,7 +130,7 @@ result = calculate_average(ratings)
 print("Average rating:", result)
 
 
-# 10. BASIC DATA ANALYSIS PRACTICE
+# 9. BASIC DATA ANALYSIS PRACTICE
 
 print("\n10. BASIC DATA ANALYSIS")
 
