@@ -1,69 +1,32 @@
 # Lesson 2: NumPy – Numerical Analysis
 
 ## 1. Introduction to NumPy
-
-- Understanding what NumPy is.
-- Learning the purpose of NumPy in data analysis.
-- Understanding the difference between Python lists and NumPy arrays.
-- Understanding the importance of numerical computing.
+- Understanding NumPy and its importance in data analysis.
+- Learning how NumPy arrays differ from Python lists.
 
 ## 2. NumPy Arrays
-
-- Understanding NumPy arrays.
-- Creating one-dimensional arrays.
-- Creating two-dimensional arrays.
-- Understanding array dimensions and shapes.
-- Identifying the number of elements in an array.
-- Understanding array data types.
+- Creating one-dimensional and two-dimensional arrays.
+- Understanding array shapes, dimensions and data types.
 
 ## 3. Array Operations
-
 - Performing addition, subtraction, multiplication and division.
-- Performing mathematical operations on arrays.
-- Understanding element-wise operations.
-- Working with array comparisons.
-- Understanding how operations are applied across arrays.
+- Applying mathematical operations to arrays.
 
-## 4. Array Indexing and Slicing
+## 4. Indexing and Slicing
+- Accessing specific elements in arrays.
+- Selecting and extracting parts of an array.
 
-- Accessing individual array elements.
-- Understanding positive and negative indexing.
-- Selecting specific elements from arrays.
-- Extracting sections of arrays using slicing.
-- Accessing elements in two-dimensional arrays.
-
-## 5. Mathematical Functions
-
-- Calculating sums and averages.
-- Finding minimum and maximum values.
-- Calculating standard deviation and variance.
-- Understanding square roots and powers.
-- Applying mathematical functions to arrays.
+## 5. Mathematical and Statistical Functions
+- Calculating sums, averages, minimum and maximum values.
+- Understanding mean, median, variance and standard deviation.
 
 ## 6. Array Manipulation
+- Reshaping, sorting, joining and splitting arrays.
+- Changing the structure of numerical data.
 
-- Reshaping arrays.
-- Flattening multidimensional arrays.
-- Joining arrays.
-- Splitting arrays.
-- Sorting array elements.
-- Understanding how to modify array structures.
-
-## 7. Filtering and Selecting Data
-
-- Selecting elements based on conditions.
-- Using Boolean indexing.
-- Filtering numerical values.
-- Understanding how conditions help extract specific information.
-
-## 8. Statistical Operations
-
-- Calculating mean, median and standard deviation.
-- Finding minimum and maximum values.
-- Understanding sums and cumulative sums.
-- Analysing numerical distributions.
-- Understanding basic statistical measurements.
+## 7. Filtering Data
+- Selecting values based on specific conditions.
+- Using Boolean indexing to filter arrays.
 
 ## Learning Goal
-
-Develop the ability to create, access, manipulate and analyse numerical data using NumPy.
+Understand how to use NumPy to organise, manipulate and analyse numerical data efficiently.
