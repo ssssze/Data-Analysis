@@ -1,33 +1,33 @@
-# Lesson 3: Pandas – Working with Data
 
-## 1. Introduction to Pandas
-- Understanding Pandas and its importance in data analysis.
-- Learning about Series and DataFrames.
+# Lesson 3: Data Cleaning, Manipulation and Exploratory Data Analysis
 
-## 2. Loading and Viewing Data
-- Importing datasets.
-- Reading CSV and Excel files.
-- Viewing rows, columns and dataset information.
+## 1. Data Cleaning
+Data cleaning is the process of identifying and correcting errors, missing values and inconsistencies to make data accurate and reliable.
 
-## 3. Selecting and Accessing Data
-- Selecting specific rows and columns.
-- Accessing individual values.
-- Understanding indexing and slicing.
+- Handling missing values.
+- Removing duplicate records.
+- Correcting incorrect information.
+- Identifying and handling outliers.
+- Checking data types and consistency.
 
-## 4. Exploring Data
-- Checking data types and dataset structure.
-- Understanding basic statistical summaries.
-- Identifying patterns in datasets.
+## 2. Data Manipulation
+Data manipulation is the process of changing, organising and arranging data to make it easier to analyse.
 
-## 5. Working with DataFrames
+- Selecting and filtering data.
 - Adding and removing columns.
-- Renaming columns.
-- Sorting and organising data.
+- Sorting and rearranging information.
+- Grouping and combining data.
+- Merging datasets.
 
-## 6. Grouping and Filtering
-- Filtering data using conditions.
-- Grouping information into categories.
-- Summarising grouped data.
+## 3. Exploratory Data Analysis (EDA)
+EDA is the process of examining and understanding a dataset to discover patterns, trends and relationships before performing detailed analysis.
+
+- Exploring dataset structure.
+- Understanding data distributions.
+- Calculating basic statistics.
+- Identifying patterns and relationships.
+- Detecting unusual values and trends.
 
 ## Learning Goal
-Develop the ability to load, organise, explore and analyse datasets using Pandas.
+Develop the ability to clean, organise, manipulate and explore datasets before performing detailed data analysis.
+
