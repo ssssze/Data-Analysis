@@ -1,7 +1,7 @@
 # Data-Analysis
 
 ## About
-This repository documents my journey of learning Data Analysis using Python. It covers essential concepts, practical coding exercises, and techniques for working with real-world datasets.
+This repository documents my journey of learning Data Analysis using Python. It covers essential concepts and techniques for working with real-world datasets. I have also worked on a data analysis on netflix series and tv shows.
 
 ## Learning Topics
 
