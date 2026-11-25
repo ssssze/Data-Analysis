@@ -52,11 +52,7 @@ This repository documents my journey of learning Data Analysis using Python. It 
 - Python
 - NumPy
 - Pandas
-- Matplotlib
-- Seaborn
-- SciPy
-- SQL
-- Power BI
+
 
 ## Learning Goals
 - Develop strong data analysis skills.
