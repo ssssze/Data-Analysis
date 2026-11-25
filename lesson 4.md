@@ -1,473 +1,146 @@
 
-# ============================================================
-# LESSON 4: NETFLIX MOVIES AND TV SHOWS - DATA ANALYSIS
-# Dataset: netflix_titles.csv
-# ============================================================
+# Lesson 4: Real-World Data Analysis – Netflix Movies and TV Shows
 
-# 1. IMPORTING LIBRARIES
+## 1. Introduction
 
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+For this lesson, I analysed the Netflix Movies and TV Shows dataset from Kaggle, created by Shivam Bansal. The purpose of this analysis is to understand the contents of the dataset, identify patterns and trends, compare different categories and discover useful information through data analysis.
 
-sns.set_theme(style="whitegrid")
+The dataset contains **8,807 records and 12 columns**. Each record represents a movie or TV show and includes information such as its title, director, cast, country of production, release year, rating, duration, genre and description.
 
+It is important to note that the dataset represents Netflix titles recorded up to September 2021. Therefore, it does not necessarily represent Netflix's current catalogue.
 
-# ============================================================
-# 2. LOADING AND UNDERSTANDING THE DATASET
-# ============================================================
+## 2. Understanding the Dataset
 
-df = pd.read_csv("netflix_titles.csv")
+The dataset contains twelve columns, each providing a different type of information about the titles.
 
-print("\n========== DATASET OVERVIEW ==========")
+- **Show ID:** A unique identification number assigned to each title.
+- **Type:** Identifies whether the content is a Movie or a TV Show.
+- **Title:** Contains the name of each movie or TV show.
+- **Director:** Provides information about the director of the title.
+- **Cast:** Lists the actors and performers involved.
+- **Country:** Shows the country or countries where the content was produced.
+- **Date Added:** Records when the title was added to Netflix.
+- **Release Year:** Indicates the year the movie or TV show was originally released.
+- **Rating:** Provides the age-based content classification.
+- **Duration:** Records the running time of movies or the number of seasons in TV Shows.
+- **Listed In:** Contains the genres and categories assigned to each title.
+- **Description:** Provides a short summary of the content.
 
-print("Dataset shape:", df.shape)
-print("Number of titles:", len(df))
-print("Number of columns:", len(df.columns))
+Understanding these columns is important because it helps determine what information is available and what types of analysis can be performed.
 
-print("\nColumn names:")
-print(df.columns.tolist())
+## 3. Data Cleaning and Quality
 
-print("\nFirst five records:")
-print(df.head())
+Before analysing the dataset, I examined its structure, checked for missing values and searched for duplicate records.
 
-print("\nDataset information:")
-df.info()
+The dataset contains no completely duplicated rows. However, several columns have missing information. The director column has the highest number of missing values, with 2,634 entries. The cast column has 825 missing values, while the country column has 831. The date added column has 10 missing values, the rating column has 4, and the duration column has 3.
 
-print("\nBasic statistical summary:")
-print(df.describe(include="all"))
+During the inspection, I also found three movie records where the running time had been incorrectly placed in the rating column. These records needed correction to ensure that the information was organised properly.
 
+Missing information was handled by identifying unavailable entries rather than treating them as actual values. The date-added column also needed to be converted into a proper date format so that the titles could be analysed according to the year they were added.
 
-# ============================================================
-# 3. DATA CLEANING AND DATA QUALITY
-# ============================================================
+Overall, cleaning the dataset was necessary to improve its quality and make the analysis more reliable.
 
-print("\n========== DATA CLEANING ==========")
+## 4. Content Distribution: Movies and TV Shows
 
-print("\nMissing values before cleaning:")
-print(df.isnull().sum())
+The first part of the analysis focused on comparing the number of Movies and TV Shows in the dataset.
 
-print("\nTotal missing values:")
-print(df.isnull().sum().sum())
+Out of the 8,807 titles, 6,131 are Movies, representing approximately 69.62% of the dataset. The remaining 2,676 are TV Shows, accounting for approximately 30.38%.
 
-print("\nDuplicate records:")
-print(df.duplicated().sum())
+This shows that Movies make up the majority of the Netflix titles in the dataset. There are more than twice as many Movies as TV Shows.
 
-# Remove duplicate records
-df = df.drop_duplicates().copy()
+This comparison helps us understand the overall composition of the collection and shows that movie content is more heavily represented.
 
-# Correct three movie records where duration was
-# incorrectly stored in the rating column.
-wrong_rating = df["rating"].astype("string").str.contains(
-    r"min$",
-    case=False,
-    na=False
-)
+## 5. Analysis of Release Years
 
-df.loc[wrong_rating, "duration"] = df.loc[
-    wrong_rating, "rating"
-]
+The release-year analysis was conducted to understand when the movies and TV shows in the dataset were originally released.
 
-df.loc[wrong_rating, "rating"] = np.nan
+The dataset includes titles released between 1925 and 2021. However, most of the titles were released in more recent years.
 
-# Convert date_added into a proper date format
-df["date_added"] = pd.to_datetime(
-    df["date_added"].astype("string").str.strip(),
-    errors="coerce"
-)
+The year 2018 has the highest number of titles, with 1,147 records. It is followed by 2017 with 1,032 titles and 2019 with 1,030 titles. The years 2020 and 2016 also have relatively high numbers, with 953 and 902 titles respectively.
 
-# Fill missing categorical information
-columns_to_fill = [
-    "director",
-    "cast",
-    "country",
-    "rating",
-    "duration"
-]
+The number of titles increases considerably from 2015 onwards, reaches its highest point in 2018 and then gradually decreases.
 
-for column in columns_to_fill:
-    df[column] = df[column].fillna("Unknown")
+This suggests that the dataset contains a strong representation of relatively recent content, although older movies and TV shows are also included.
 
-print("\nMissing values after cleaning:")
-print(df.isnull().sum())
+## 6. Analysis of Countries
 
-print("\nThe dataset has been cleaned.")
-print("Remaining duplicate records:", df.duplicated().sum())
+The country analysis was conducted to identify which countries appear most frequently in the production information.
 
+Some titles were produced by more than one country. Therefore, each country listed for a title was counted separately.
 
-# ============================================================
-# 4. CONTENT DISTRIBUTION: MOVIES VS TV SHOWS
-# ============================================================
+The United States has the highest number of country listings, with 3,689. India follows with 1,046, while the United Kingdom has 804. Canada and France are also among the most frequently listed countries, with 445 and 393 listings respectively.
 
-print("\n========== CONTENT DISTRIBUTION ==========")
+Japan, Spain, South Korea, Germany and Mexico also appear among the leading countries.
 
-content_counts = df["type"].value_counts()
-content_percentages = df["type"].value_counts(normalize=True) * 100
+These findings show that the United States has a particularly strong presence in the dataset. However, the collection also includes a wide range of international productions, demonstrating the variety of countries represented.
 
-print("\nNumber of Movies and TV Shows:")
-print(content_counts)
+## 7. Analysis of Genres
 
-print("\nPercentage distribution:")
-print(content_percentages.round(2))
+The genre analysis was conducted to identify the most common types of content in the dataset.
 
-print(
-    f"\nMovies account for "
-    f"{content_percentages.get('Movie', 0):.2f}% "
-    f"of all titles."
-)
+Each title can belong to more than one genre, so the analysis counts individual genre listings rather than unique titles.
 
-print(
-    f"TV Shows account for "
-    f"{content_percentages.get('TV Show', 0):.2f}% "
-    f"of all titles."
-)
+International Movies is the most frequently listed category, with 2,752 listings. Dramas follow with 2,427, while Comedies have 1,674. International TV Shows have 1,351 listings.
 
-plt.figure(figsize=(7, 5))
-content_counts.plot(
-    kind="pie",
-    autopct="%1.1f%%",
-    startangle=90
-)
-plt.title("Distribution of Movies and TV Shows")
-plt.ylabel("")
-plt.tight_layout()
-plt.show()
+Other frequently appearing categories include Documentaries, Action and Adventure, TV Dramas, Independent Movies, Children and Family Movies, and Romantic Movies.
 
+The findings show that the dataset contains a wide variety of entertainment categories. International content, drama and comedy are particularly well represented.
 
-# ============================================================
-# 5. ANALYSIS OF RELEASE YEARS
-# ============================================================
+## 8. Analysis of Content Ratings
 
-print("\n========== RELEASE YEAR ANALYSIS ==========")
+The rating analysis was conducted to understand the age classifications assigned to the movies and TV shows.
 
-release_year_counts = df["release_year"].value_counts().sort_index()
+TV-MA is the most frequently recorded rating, with 3,207 titles. TV-14 follows with 2,160 titles. Other common ratings include TV-PG with 863, R with 799 and PG-13 with 490.
 
-print("\nEarliest release year:", df["release_year"].min())
-print("Latest release year:", df["release_year"].max())
+The results show that TV-MA and TV-14 are the two most frequently recorded classifications in the dataset.
 
-print("\nTen most common release years:")
-print(df["release_year"].value_counts().head(10))
+This provides an understanding of the different audience classifications represented in the collection. However, some ratings are missing or require correction, so these issues should be considered when interpreting the results.
 
-most_common_release_year = df["release_year"].mode()[0]
+## 9. Analysis of Movie Duration
 
-print(
-    "\nThe most represented release year is",
-    most_common_release_year,
-    "with",
-    release_year_counts[most_common_release_year],
-    "titles."
-)
+The movie-duration analysis focused on understanding how long movies in the dataset generally last.
 
-# Display the ten most represented release years
-top_release_years = df["release_year"].value_counts().head(10).sort_index()
+After separating Movies from TV Shows, I examined the recorded running times. There are 6,131 movies with recorded duration information after correcting the three misplaced entries.
 
-plt.figure(figsize=(11, 5))
-top_release_years.plot(kind="bar")
-plt.title("Ten Most Represented Release Years")
-plt.xlabel("Release Year")
-plt.ylabel("Number of Titles")
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.show()
+The average movie duration is approximately 99.6 minutes, while the median duration is 98 minutes. The most common movie duration is 90 minutes.
 
-# Display the distribution across all release years
-plt.figure(figsize=(11, 5))
-release_year_counts.plot(kind="line")
-plt.title("Distribution of Titles Across Release Years")
-plt.xlabel("Release Year")
-plt.ylabel("Number of Titles")
-plt.tight_layout()
-plt.show()
+The shortest recorded movie lasts 3 minutes, while the longest lasts 312 minutes.
 
+These findings show that most movies in the dataset have a running time of around 90 to 100 minutes, although there are also shorter and considerably longer movies.
 
-# ============================================================
-# 6. ANALYSIS OF COUNTRIES
-# ============================================================
+## 10. Analysis of TV Show Seasons
 
-print("\n========== COUNTRY ANALYSIS ==========")
+Unlike movies, the duration column for TV Shows records the number of seasons rather than the running time.
 
-# Separate multiple countries listed in one record
-country_data = df[df["country"] != "Unknown"].copy()
+The analysis shows that 1,793 TV Shows have one season, making it the most common number of seasons. A further 425 shows have two seasons, while 199 have three seasons.
 
-country_data["country"] = country_data["country"].str.split(", ")
+The number of shows generally decreases as the number of seasons increases. The highest recorded number of seasons is 17.
 
-country_data = country_data.explode("country")
+This suggests that TV Shows with only one season are much more common in the dataset than longer-running series.
 
-country_counts = country_data["country"].value_counts()
+## 11. Analysis of Netflix Content Additions
 
-print("\nTen most frequently listed countries:")
-print(country_counts.head(10))
+The date-added analysis was conducted to understand how many titles were added to Netflix during different years.
 
-print(
-    "\nThe country with the highest number of title listings is",
-    country_counts.idxmax(),
-    "with",
-    country_counts.max(),
-    "listings."
-)
+The earliest recorded addition date is January 1, 2008, while the latest is September 25, 2021.
 
-plt.figure(figsize=(11, 6))
-country_counts.head(10).sort_values().plot(kind="barh")
-plt.title("Top 10 Countries by Number of Netflix Title Listings")
-plt.xlabel("Number of Title Listings")
-plt.ylabel("Country")
-plt.tight_layout()
-plt.show()
+The year 2019 has the highest number of recorded additions, with 2,016 titles. In 2020, 1,879 titles were added, followed by 1,498 in 2021. The number of additions also increased considerably between 2016 and 2018.
 
+This shows that the number of titles added to Netflix increased significantly over time, reaching its highest point in 2019 before decreasing in the following years represented in the dataset.
 
-# ============================================================
-# 7. ANALYSIS OF GENRES
-# ============================================================
+## 12. Overall Findings and Conclusion
 
-print("\n========== GENRE ANALYSIS ==========")
+The analysis of the Netflix Movies and TV Shows dataset revealed several important patterns.
 
-# Separate multiple genres assigned to each title
-genre_data = df[["title", "listed_in"]].copy()
+First, Movies make up approximately 69.62% of the dataset, showing that they are much more common than TV Shows. Most titles were released between 2015 and 2021, with 2018 being the most represented release year.
 
-genre_data["listed_in"] = genre_data["listed_in"].str.split(", ")
+The country analysis showed that the United States has the highest number of production-country listings, followed by India and the United Kingdom. The genre analysis revealed that International Movies, Dramas and Comedies are the most frequently listed categories.
 
-genre_data = genre_data.explode("listed_in")
+The rating analysis showed that TV-MA and TV-14 are the most common classifications. The movie-duration analysis found that the average running time is approximately 99.6 minutes, while most TV Shows have only one season.
 
-genre_counts = genre_data["listed_in"].value_counts()
+Finally, the date-added analysis showed that 2019 had the highest number of recorded Netflix additions.
 
-print("\nTen most common genres:")
-print(genre_counts.head(10))
+Overall, this project demonstrates how data analysis can be used to understand a large dataset, identify patterns, compare different categories and draw meaningful conclusions from information. It also shows the importance of data cleaning and exploratory data analysis before presenting results.
 
-print(
-    "\nThe most frequently listed genre is",
-    genre_counts.idxmax(),
-    "with",
-    genre_counts.max(),
-    "listings."
-)
-
-plt.figure(figsize=(11, 6))
-genre_counts.head(10).sort_values().plot(kind="barh")
-plt.title("Top 10 Netflix Genres")
-plt.xlabel("Number of Genre Listings")
-plt.ylabel("Genre")
-plt.tight_layout()
-plt.show()
-
-
-# ============================================================
-# 8. ANALYSIS OF CONTENT RATINGS
-# ============================================================
-
-print("\n========== CONTENT RATING ANALYSIS ==========")
-
-rating_counts = df["rating"].value_counts()
-
-print("\nContent rating distribution:")
-print(rating_counts)
-
-print("\nTen most common content ratings:")
-print(rating_counts.head(10))
-
-print(
-    "\nThe most common content rating is",
-    rating_counts.index[0],
-    "with",
-    rating_counts.iloc[0],
-    "titles."
-)
-
-plt.figure(figsize=(11, 6))
-rating_counts.head(10).sort_values().plot(kind="barh")
-plt.title("Most Common Netflix Content Ratings")
-plt.xlabel("Number of Titles")
-plt.ylabel("Rating")
-plt.tight_layout()
-plt.show()
-
-
-# ============================================================
-# 9. ANALYSIS OF MOVIE DURATION
-# ============================================================
-
-print("\n========== MOVIE DURATION ANALYSIS ==========")
-
-movies = df[df["type"] == "Movie"].copy()
-
-# Extract numerical duration from the duration column
-movies["duration_number"] = pd.to_numeric(
-    movies["duration"].astype("string").str.extract(r"(\d+)")[0],
-    errors="coerce"
-)
-
-movie_durations = movies["duration_number"].dropna()
-
-print("\nNumber of movies with recorded duration:")
-print(len(movie_durations))
-
-print("\nMovie duration statistics:")
-print(movie_durations.describe())
-
-print("\nAverage movie duration:")
-print(round(movie_durations.mean(), 2), "minutes")
-
-print("\nMedian movie duration:")
-print(movie_durations.median(), "minutes")
-
-print("\nMost common movie duration:")
-print(movie_durations.mode().tolist(), "minutes")
-
-print("\nShortest movie:")
-print(movie_durations.min(), "minutes")
-
-print("\nLongest movie:")
-print(movie_durations.max(), "minutes")
-
-plt.figure(figsize=(10, 5))
-plt.hist(movie_durations, bins=30, edgecolor="black")
-plt.title("Distribution of Movie Durations")
-plt.xlabel("Duration in Minutes")
-plt.ylabel("Number of Movies")
-plt.tight_layout()
-plt.show()
-
-plt.figure(figsize=(8, 5))
-sns.boxplot(x=movie_durations)
-plt.title("Boxplot of Movie Durations")
-plt.xlabel("Duration in Minutes")
-plt.tight_layout()
-plt.show()
-
-
-# ============================================================
-# 10. ANALYSIS OF TV SHOW SEASONS
-# ============================================================
-
-print("\n========== TV SHOW SEASON ANALYSIS ==========")
-
-tv_shows = df[df["type"] == "TV Show"].copy()
-
-tv_shows["season_number"] = pd.to_numeric(
-    tv_shows["duration"].astype("string").str.extract(r"(\d+)")[0],
-    errors="coerce"
-)
-
-season_counts = tv_shows["season_number"].value_counts().sort_index()
-
-print("\nNumber of TV Shows by season:")
-print(season_counts)
-
-print("\nMost common number of seasons:")
-print(season_counts.idxmax())
-
-print("\nNumber of shows with one season:")
-print(season_counts.get(1, 0))
-
-print("\nHighest number of seasons:")
-print(season_counts.index.max())
-
-plt.figure(figsize=(10, 5))
-season_counts.plot(kind="bar")
-plt.title("Number of Seasons in Netflix TV Shows")
-plt.xlabel("Number of Seasons")
-plt.ylabel("Number of TV Shows")
-plt.xticks(rotation=0)
-plt.tight_layout()
-plt.show()
-
-
-# ============================================================
-# 11. ANALYSIS OF NETFLIX CONTENT ADDITIONS
-# ============================================================
-
-print("\n========== NETFLIX CONTENT ADDITIONS ==========")
-
-# Extract the year in which each title was added
-df["year_added"] = df["date_added"].dt.year
-
-year_added_counts = df["year_added"].value_counts().sort_index()
-
-print("\nNumber of titles added each year:")
-print(year_added_counts)
-
-print("\nEarliest date added:")
-print(df["date_added"].min())
-
-print("\nLatest date added:")
-print(df["date_added"].max())
-
-print(
-    "\nThe year with the highest number of additions is",
-    year_added_counts.idxmax(),
-    "with",
-    year_added_counts.max(),
-    "titles."
-)
-
-plt.figure(figsize=(11, 5))
-year_added_counts.plot(kind="line", marker="o")
-plt.title("Number of Netflix Titles Added Each Year")
-plt.xlabel("Year Added")
-plt.ylabel("Number of Titles")
-plt.tight_layout()
-plt.show()
-
-
-# ============================================================
-# 12. FINAL SUMMARY OF THE ANALYSIS
-# ============================================================
-
-print("\n========== FINAL ANALYSIS SUMMARY ==========")
-
-print("Total number of titles:", len(df))
-
-print(
-    "Total Movies:",
-    (df["type"] == "Movie").sum()
-)
-
-print(
-    "Total TV Shows:",
-    (df["type"] == "TV Show").sum()
-)
-
-print(
-    "Most common content type:",
-    content_counts.idxmax()
-)
-
-print(
-    "Most common release year:",
-    most_common_release_year
-)
-
-print(
-    "Most frequently listed country:",
-    country_counts.idxmax()
-)
-
-print(
-    "Most frequently listed genre:",
-    genre_counts.idxmax()
-)
-
-print(
-    "Most common content rating:",
-    rating_counts.index[0]
-)
-
-print(
-    "Average movie duration:",
-    round(movie_durations.mean(), 2),
-    "minutes"
-)
-
-print(
-    "Most common TV show season count:",
-    season_counts.idxmax()
-)
-
-print(
-    "Year with the most Netflix additions:",
-    year_added_counts.idxmax()
-)
-
-print("\nNetflix dataset analysis completed successfully.")
 
 
